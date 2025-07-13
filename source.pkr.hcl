@@ -12,7 +12,6 @@ source "proxmox-iso" "arch_vm" {
   ssh_username             = var.ssh_username
   ssh_password             = var.ssh_password
   ssh_timeout              = "15m"
-  vm_id                    = 9001
   template_description     = "Arch Linux generated on ${timestamp()}"
   template_name            = lower("arch-linux-${formatdate("YYYY-MMMM", timestamp())}")
 
