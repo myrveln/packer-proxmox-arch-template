@@ -46,8 +46,11 @@ Connection=ethernet
 IP=dhcp
 EOF
 
-# Enable for template use (will be removed when cloning to real VM)
+# Enable for template use (will be removed after cloning to real VM)
 netctl enable eth0-dhcp
+
+# Enabled systemd-resolved service
+systemctl enable systemd-resolved.service
 
 # Create user, group and set up sudo permissions
 echo -e 'template\ntemplate' | passwd
@@ -60,6 +63,16 @@ Defaults:kim !requiretty
 kim ALL=(ALL) NOPASSWD: ALL
 EOF
 chmod 440 /etc/sudoers.d/allow-group-wheel
+
+# Create initial .ssh dir for authorized_keys
+mkdir -p /home/kim/.ssh
+chown kim:users /home/kim/.ssh
+chmod 0700 /home/kim/.ssh
+
+# Create authorized_keys for user kim
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCc3724+7/v0qON9u8Q+EDcIPQZR7vLFLu9wPx3uMLeHpzdvO/uVo2gu2cd3M/1CTKeLHx580PuBkxe+hN86uLFrM/KPiYazo+EK5sl/4GDRwL+XVFdBg+ugley92X/DAWcvA4JzKuwtUZ0o3V2wd1MedEhZ8Y7rz7F4XzvLXqxpaV5/fzpPFu8FG5qaYJJ9Zjnyg1u//0pFgV2Mmq2o+WV0mg8AeA5ufgbpmAqPIIJpQHvbzfb23bCW7P9GkqEEe5COhH/o7MomnWPnuI08VrIMYC9MivPPWUyo6ohySX6/+Ack0X4M3xnJ7GsuVN9F1NCeI2da0ms7zzkOE8neYZj kim@myrveln.se" > /home/kim/.ssh/authorized_keys
+chown kim:users /home/kim/.ssh/authorized_keys
+chmod 0700 /home/kim/.ssh/authorized_keys
 
 # Enable SSH service
 systemctl enable sshd

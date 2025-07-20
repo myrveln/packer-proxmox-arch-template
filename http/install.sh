@@ -81,7 +81,7 @@ pacman-key --init
 pacman-key --populate archlinux
 
 # Install essential packages
-pacstrap /mnt base linux qemu-guest-agent lvm2 grub sudo openssh netctl dhcpcd emacs-nox
+pacstrap /mnt base linux qemu-guest-agent lvm2 grub sudo openssh netctl dhcpcd emacs-nox python
 
 # Generate fstab
 genfstab -p -U /mnt >> /mnt/etc/fstab
